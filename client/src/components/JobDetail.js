@@ -1,11 +1,23 @@
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { jobs } from '../fake-data';
+import {useEffect, useState} from 'react';
+import {getOneJob} from "../GraphQL/queries";
+
 
 function JobDetail() {
+  const [job, setJob] = useState(null);
+  // useParams to extract the id from the url
   const { jobId } = useParams();
 
-  const job = jobs.find((job) => job.id === jobId);
+  useEffect(() => {
+      //.then(setJob) is the same as .then((job) => setJob(job))
+      getOneJob(jobId).then(setJob);
+  }, [jobId]);
+
+  if (!job) {
+    return null;
+  }
+
   return (
     <div>
       <h1 className="title">

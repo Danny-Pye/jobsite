@@ -18,3 +18,37 @@ export const getJobs = async () => {
     return jobs;
 }
 
+export const getOneJob = async (id) => {
+    const query = gql`
+        query jobQuery($id: ID!) {
+            job(id: $id) {
+                id
+                title
+                description
+                company {
+                    id
+                    name
+                }
+            }
+        }
+    `;
+    const variables = { id };
+    const {job} = await request(GRAPH_QL_URL, query, variables);
+    return job;
+}
+
+
+export const getCompany = async (id) => {
+    const query = gql`
+        query companyQuery($id: ID!) {
+            company(id: $id) {
+                id
+                name
+                description
+            }
+        }
+    `;
+    const variables = { id };
+    const {company} = await request(GRAPH_QL_URL, query, variables);
+    return company;
+}
