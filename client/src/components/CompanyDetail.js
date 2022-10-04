@@ -14,6 +14,7 @@ function CompanyDetail() {
     if (!company) {
         return null;
     }
+    console.log(company);
 
   return (
     <div>
@@ -23,6 +24,18 @@ function CompanyDetail() {
       <div className="box">
         {company.description}
       </div>
+
+        {company.jobs.map((each) => {
+            return (
+                <div key={each.id}>
+                    <h3>{each.title}</h3>
+                    <p>{each.description}</p>
+                    <hr/>
+                </div>
+            );
+        })}
+
+
     </div>
   );
 }
